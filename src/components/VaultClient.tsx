@@ -77,7 +77,7 @@ export default function VaultClient({ initialItems }: VaultClientProps) {
     } else if (masterPassword) {
       setVaultItems([]);
     }
-  }, [masterPassword, initialItems]);
+  }, [masterPassword]);
 
   async function decryptInitialItems() {
     if (!masterPassword) return;
@@ -92,7 +92,7 @@ export default function VaultClient({ initialItems }: VaultClientProps) {
       );
       setVaultItems(decryptedItems);
       setError(null);
-    } catch (e) {
+    } catch (error) {
       setError('Failed to decrypt vault items. Please check your master password.');
       setVaultItems([]);
     } finally {
@@ -147,7 +147,7 @@ export default function VaultClient({ initialItems }: VaultClientProps) {
       setShowForm(false);
       setEditingItem(null);
       setError(null);
-    } catch (e) {
+    } catch (error) {
       setError('Failed to save vault item.');
     }
   }
@@ -682,7 +682,7 @@ export default function VaultClient({ initialItems }: VaultClientProps) {
                       <p className={`text-lg ${
                         isDarkMode ? 'text-purple-300' : 'text-blue-600'
                       }`}>
-                        No items found for "{searchQuery}"
+                        No items found for "{searchQuery}
                       </p>
                       <p className={`text-sm mt-2 ${
                         isDarkMode ? 'text-slate-400' : 'text-gray-500'

@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
@@ -14,23 +15,30 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isDark, setIsDark] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
+  // Prevent hydration mismatch
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-    
-    setIsDark(shouldBeDark);
-    updateTheme(shouldBeDark);
+    setMounted(true);
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+      
+      setIsDark(shouldBeDark);
+      updateTheme(shouldBeDark);
+    }
   }, []);
 
   const updateTheme = (dark: boolean) => {
-    if (dark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    if (typeof window !== 'undefined') {
+      if (dark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
     }
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
   };
 
   const toggleTheme = () => {
@@ -40,11 +48,13 @@ export default function LoginPage() {
   };
 
   useEffect(() => {
-    const message = searchParams.get('message');
-    if (message) {
-      setSuccessMessage(message);
+    if (mounted) {
+      const message = searchParams.get('message');
+      if (message) {
+        setSuccessMessage(message);
+      }
     }
-  }, [searchParams]);
+  }, [searchParams, mounted]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -65,6 +75,10 @@ export default function LoginPage() {
     } else {
       router.push('/vault');
     }
+  }
+
+  if (!mounted) {
+    return null; // Prevent SSR mismatch
   }
 
   return (
@@ -255,7 +269,7 @@ export default function LoginPage() {
           <p className={`transition-colors duration-500 ${
             isDark ? 'text-slate-300' : 'text-gray-600'
           }`}>
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link 
               href="/signup" 
               className={`font-bold transition-colors duration-300 ${
@@ -270,5 +284,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

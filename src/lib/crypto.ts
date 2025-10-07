@@ -13,7 +13,7 @@ export class CryptoService {
     return window.crypto.subtle.deriveKey(
       {
         name: 'PBKDF2',
-        salt: salt,
+        salt: salt as BufferSource, // Fix the type issue
         iterations: 100000,
         hash: 'SHA-256'
       },
@@ -38,7 +38,7 @@ export class CryptoService {
       
       // Encrypt the data
       const encrypted = await window.crypto.subtle.encrypt(
-        { name: 'AES-GCM', iv: iv },
+        { name: 'AES-GCM', iv: iv as BufferSource }, // Fix the type issue
         key,
         data
       );
@@ -73,9 +73,9 @@ export class CryptoService {
       
       // Decrypt the data
       const decrypted = await window.crypto.subtle.decrypt(
-        { name: 'AES-GCM', iv: iv },
+        { name: 'AES-GCM', iv: iv as BufferSource }, // Fix the type issue
         key,
-        encrypted
+        encrypted as BufferSource // Fix the type issue
       );
       
       // Convert back to string
