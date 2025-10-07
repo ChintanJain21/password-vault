@@ -49,5 +49,59 @@ This app uses the **Web Crypto API** for client-side encryption because:
 ### Installation
 
 1. **Clone the repository**
-git clone https://github.com/your-username/password-vault.git
-cd password-vault
+    ```
+    git clone https://github.com/ChintanJain21/password-vault.git
+    cd password-vault
+     ```
+2. **Install dependencies**
+ ```
+  npm install
+ ```
+3. **Set up environment variables**
+Create `.env.local`:
+ ```
+MONGODB_URI=your-mongodb-connection-string
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-key
+NODE_ENV=development
+ ```
+
+4. **Run the development server**
+    ```
+    npm run dev
+     ```
+
+## 🌟 Key Features Demo
+
+1. **Sign up** with email/password
+2. **Create master password** (this encrypts everything)
+3. **Add password entries** with auto-generation
+4. **Search and organize** your passwords
+5. **Copy passwords** with auto-clear security
+6. **Switch themes** seamlessly
+   ## 📂 Project Structure
+   ```
+   src/
+    ├── app/
+    │ ├── api/ # API routes
+    │  ├── login/ # Login page
+    │ ├── signup/ # Signup page
+    │ └── vault/ # Main vault interface
+   ├── components/ # React components
+   ├── lib/ # Utilities & database
+   └── types/ # TypeScript definitions
+   ```
+   
+## 🚀 Deployment
+
+Deployed on **Vercel** with **MongoDB Atlas**:
+
+1. Push to GitHub
+2. Connect to Vercel
+3. Add environment variables
+4. Deploy automatically.
+
+
+
+
+    
