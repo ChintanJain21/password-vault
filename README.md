@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Password Vault - Secure Password Manager
 
-## Getting Started
+A modern, secure password manager built with Next.js 15, MongoDB, and client-side encryption featuring beautiful dynamic light/dark themes.
 
-First, run the development server:
+## 🔐 Security Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Client-side encryption** using Web Crypto API (AES-GCM + PBKDF2)
+- **Master password system** - never stored on server
+- **Auto-clearing clipboard** (15 seconds)
+- **Zero-knowledge architecture** - server never sees plaintext
+- **Exclude look-alike characters** in password generation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 🎨 **Dynamic light/dark themes** with smooth transitions
+- 🔑 **Advanced password generator** with strength meter
+- 🔍 **Search and filter** vault items
+- 📱 **Fully responsive** design
+- 🍞 **Toast notifications** for better UX
+- ⚡ **Real-time encryption/decryption**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Live Demo
 
-## Learn More
+**🔗 [Live Demo](https://password-vault-flame.vercel.app/)**
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Frontend**: Next.js 15, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Database**: MongoDB Atlas
+- **Authentication**: NextAuth.js
+- **Encryption**: Web Crypto API
+- **Deployment**: Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## 🔒 Encryption Details
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This app uses the **Web Crypto API** for client-side encryption because:
+- Built into modern browsers (no external dependencies)
+- Provides robust AES-GCM encryption with PBKDF2 key derivation (100,000 iterations)
+- Ensures server never sees plaintext passwords, maintaining true zero-knowledge architecture
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🏃‍♂️ Quick Start
+
+### Prerequisites
+- Node.js 18+
+- MongoDB Atlas account
+
+### Installation
+
+1. **Clone the repository**
+git clone https://github.com/your-username/password-vault.git
+cd password-vault
